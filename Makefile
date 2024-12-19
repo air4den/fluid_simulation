@@ -1,6 +1,6 @@
 TARGET  = fluid_simulation
 CC      = g++
-CFLAGS  = -std=c++17 -Wall -g 
+CFLAGS  = -std=c++11 -Wall -g 
 LIBS    = -lsfml-graphics -lsfml-window -lsfml-system
 
 build:./src/*.cpp
