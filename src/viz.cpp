@@ -33,7 +33,7 @@ void Viz::run_viz() {
         printf("Pos: (%d, %d)\n", mouse_curr.x, mouse_curr.y);
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            this->fluid_cube.addDensity(mouse_curr.x / CELL_SCALE, mouse_curr.y / CELL_SCALE, 500);
+            this->fluid_cube.addDensity(mouse_curr.x / CELL_SCALE, mouse_curr.y / CELL_SCALE, 1000);
         }
 
         float velX = float(mouse_curr.x - mouse_prev.x);

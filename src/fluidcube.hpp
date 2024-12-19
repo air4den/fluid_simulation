@@ -1,13 +1,20 @@
 #include <SFML/Graphics.hpp>
 #include "util.hpp"
 
+enum ColorMode {
+    BW = 0,
+    HUE_ROTATE = 1,
+    VEL = 2,
+};
+
 class FluidCube {
 
     private:
-        int size;
         float dt;
         float diff;
         float visc;
+        float curr_hue;
+        ColorMode color_mode;
 
         Array2D density;
         Array2D prev_density;

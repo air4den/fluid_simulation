@@ -93,3 +93,22 @@ void advect(ArrayData b, Array2D& d, Array2D& d0, Array2D& u, Array2D& v, float 
     }
     set_bounds(b, d);
 }
+
+sf::Color hsvToRgb(float h, float s) {
+    float v = 1.0f;  // Constant brightness
+    int i = int(h / 60.0f) % 6;
+    float f = (h / 60.0f) - i;
+    float p = v * (1.0f - s);
+    float q = v * (1.0f - f * s);
+    float t = v * (1.0f - (1.0f - f) * s);
+
+    switch (i) {
+        case 0: return sf::Color(v * 255, t * 255, p * 255);
+        case 1: return sf::Color(q * 255, v * 255, p * 255);
+        case 2: return sf::Color(p * 255, v * 255, t * 255);
+        case 3: return sf::Color(p * 255, q * 255, v * 255);
+        case 4: return sf::Color(t * 255, p * 255, v * 255);
+        case 5: return sf::Color(v * 255, p * 255, q * 255);
+        default: return sf::Color(0, 0, 0);  // Should never happen
+    }
+}
