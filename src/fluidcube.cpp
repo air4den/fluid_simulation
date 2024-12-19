@@ -67,7 +67,7 @@ void FluidCube::render(sf::RenderWindow &window) {
             cell.setSize(sf::Vector2f(CELL_SCALE, CELL_SCALE));
             cell.setPosition(i * CELL_SCALE, j * CELL_SCALE);
 
-            float alpha = this->density[i][j] > 255 ? 255 : this->density[i][j];
+            float alpha = 255 - (this->density[i][j] > 255 ? 255 : this->density[i][j]);
             cell.setFillColor(sf::Color(255, 255, 255, (sf::Uint8)alpha));
 
             window.draw(cell);

@@ -3,9 +3,9 @@
 #if !defined UTILS
 #define UTILS
 
-const int CUBE_SIZE = 75; 
-const int CELL_SCALE = 8;
-const int MAX_DENSITY = 500;
+const int CUBE_SIZE = 85; 
+const int CELL_SCALE = 7;
+const int MAX_DENSITY = 1000;
 
 #endif
 
