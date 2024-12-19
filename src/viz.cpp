@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-Viz::Viz() : fluid_cube(FluidCube(1.0f, 0, 1e-6f)) {
+Viz::Viz() : fluid_cube(FluidCube(0.2f, 0, 1e-7f)) {
     this->window.create(
         sf::VideoMode(CUBE_SIZE * CELL_SCALE, CUBE_SIZE * CELL_SCALE),
         "Incompressible Fluid Simulation"
@@ -30,29 +30,24 @@ void Viz::run_viz() {
         }
 
         mouse_curr = sf::Mouse::getPosition(this->window);
+        printf("Pos: (%d, %d)\n", mouse_curr.x, mouse_curr.y);
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            this->fluid_cube.addDensity(mouse_curr.y / CELL_SCALE, mouse_curr.x / CELL_SCALE, 100);
+            this->fluid_cube.addDensity(mouse_curr.x / CELL_SCALE, mouse_curr.y / CELL_SCALE, 500);
         }
-
-        
 
         float velX = float(mouse_curr.x - mouse_prev.x);
         float velY = float(mouse_curr.y - mouse_prev.y);
-        if (velX != 0.0 && velY != 0.0) {
-            //printf("vel: (%f, %f)", velX, velY);
+
+        if (mouse_curr.x >= 0 && mouse_curr.x <= (CUBE_SIZE * CELL_SCALE) && 
+            mouse_curr.y >= 0 && mouse_curr.y <= (CUBE_SIZE * CELL_SCALE)) {
+            this->fluid_cube.addVelocity(mouse_curr.x / CELL_SCALE, mouse_curr.y / CELL_SCALE, velX/10, velY/10);
         }
-    
-       
-        printf("dV: (%f, %f)", velX, velY);
-        this->fluid_cube.addVelocity(mouse_curr.y / CELL_SCALE, mouse_curr.x / CELL_SCALE, velY/3, velX/3);
-
-
+        
         mouse_prev = mouse_curr;
 
         this->fluid_cube.step();
-        this->fluid_cube.render(window);
-        
+        this->fluid_cube.render(window); 
 
         this->window.display();
         this->fluid_cube.fade();

@@ -9,6 +9,7 @@ FluidCube::FluidCube(float dt, float diffusion, float viscosity)
     vx{}, vy{},
     prev_vx{}, prev_vy{}
 {
+    
     this->size = CUBE_SIZE;
     this->dt = dt;
     this->diff = diffusion;
@@ -20,6 +21,7 @@ FluidCube::~FluidCube() {}
 void FluidCube::addDensity(int x, int y, float amount) {
     // this is the density of the DYE, not the density of the fluid
     // the density of the FLUID is CONSTANT in an incompressible fluid
+    //printf("density added: %f", amount);
     this->density[x][y] += amount;
 
     if (this->density[x][y] > MAX_DENSITY) {
@@ -63,7 +65,7 @@ void FluidCube::render(sf::RenderWindow &window) {
         for (int j=0; j < CUBE_SIZE; j++) {
             sf::RectangleShape cell;
             cell.setSize(sf::Vector2f(CELL_SCALE, CELL_SCALE));
-            cell.setPosition(j * CELL_SCALE, i * CELL_SCALE);
+            cell.setPosition(i * CELL_SCALE, j * CELL_SCALE);
 
             float alpha = this->density[i][j] > 255 ? 255 : this->density[i][j];
             cell.setFillColor(sf::Color(255, 255, 255, (sf::Uint8)alpha));
@@ -77,7 +79,7 @@ void FluidCube::fade() {
     for (int i=0; i < CUBE_SIZE; i++) {
         for (int j=0; j < CUBE_SIZE; j++) {
             float d = this->density[i][j];
-            this->density[i][j] = (d - 0.1f < 0) ? 0 : d - 0.1f;
+            this->density[i][j] = std::max(0.0f, d - 0.01f);
             
         }
     }
